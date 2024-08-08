@@ -18,6 +18,9 @@ const fixedSignalInput = document.getElementById("fixed-signal");
 let signalMode = "random"; // Дефолтный режим
 let fixedSignal = null;
 
+// Изначальное состояние скрытых настроек
+fixedSettings.classList.toggle("hidden", signalMode !== "fixed");
+
 function getRandomFloat(min, max, decimals) {
   const str = (Math.random() * (max - min) + min).toFixed(decimals);
   return parseFloat(str);
@@ -90,9 +93,15 @@ settingsButton.onclick = function() {
 applySettingsButton.onclick = function() {
   signalMode = modeSelect.value;
   fixedSignal = signalMode === "fixed" ? parseFloat(fixedSignalInput.value) : null;
+  fixedSettings.classList.toggle("hidden", signalMode !== "fixed");
   settingsModal.classList.add("hidden");
 };
 
 closeSettingsButton.onclick = function() {
   settingsModal.classList.add("hidden");
+};
+
+// Отслеживание изменений в выборе режима
+modeSelect.onchange = function() {
+  fixedSettings.classList.toggle("hidden", modeSelect.value !== "fixed");
 };
