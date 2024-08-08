@@ -8,6 +8,36 @@ const textError = document.getElementById("text-error");
 const getSignalTwo = document.getElementById("get-signal-two");
 const errorExit = document.getElementById("error-exit");
 
+const settingsButton = document.getElementById("settings-button");
+const settingsModal = document.getElementById("settings-modal");
+const modeSelect = document.getElementById("mode-select");
+const fixedSettings = document.getElementById("fixed-settings");
+const fixedSignalInput = document.getElementById("fixed-signal");
+const applySettingsButton = document.getElementById("apply-settings");
+const closeSettingsButton = document.getElementById("close-settings");
+
+let signalMode = 'random';
+let fixedSignalValue = 1.00; // Значение по умолчанию
+
+// Открытие модального окна
+settingsButton.onclick = function() {
+    settingsModal.style.display = 'flex';
+};
+
+// Закрытие модального окна
+closeSettingsButton.onclick = function() {
+    settingsModal.style.display = 'none';
+};
+
+// Применение настроек
+applySettingsButton.onclick = function() {
+    signalMode = modeSelect.value;
+    if (signalMode === 'fixed') {
+        fixedSignalValue = parseFloat(fixedSignalInput.value) || 1.00;
+    }
+    settingsModal.style.display = 'none';
+};
+
 // Генерация случайного числа с плавающей запятой
 function getRandomFloat(min, max, decimals) {
     const str = (Math.random() * (max - min) + min).toFixed(decimals);
@@ -20,7 +50,7 @@ function goTimer(time) {
         if (time >= 1) {
             getSignalTwo.classList.remove("deactivate");
             getSignal.classList.add("deactivate");
-            getSignalTwo.style["z-index"] = "5";
+            getSignalTwo.style.zIndex = "5";
             stopProgress.style.animation = "animateProgress 60s linear infinite";
             stopSignalTimeBlock.classList.remove("deactivate");
             document.getElementById("stop-timer").innerHTML = `${time--}<span> seconds</span>`;
@@ -28,7 +58,7 @@ function goTimer(time) {
         } else {
             getSignalTwo.classList.add("deactivate");
             getSignal.classList.remove("deactivate");
-            getSignalTwo.style["z-index"] = "-1";
+            getSignalTwo.style.zIndex = "-1";
             stopSignalTimeBlock.classList.add("deactivate");
             stopProgress.style.animation = "none";
             clearInterval(timer);
@@ -66,12 +96,17 @@ function goTimerError(time) {
 
 // Обработка нажатия кнопки "GET SIGNAL"
 getSignal.onclick = function () {
-    let receivingSignal = getRandomFloat(1, 3.99, 2);
-    if (receivingSignal.toString().length === 3) {
-        receivingSignal += "0";
-    }
-    if (receivingSignal.toString().length === 1) {
-        receivingSignal += ".00";
+    let receivingSignal;
+    if (signalMode === 'random') {
+        receivingSignal = getRandomFloat(1, 3.99, 2);
+        if (receivingSignal.toString().length === 3) {
+            receivingSignal += "0";
+        }
+        if (receivingSignal.toString().length === 1) {
+            receivingSignal += ".00";
+        }
+    } else {
+        receivingSignal = fixedSignalValue.toFixed(2);
     }
     printSignal.innerHTML = `${receivingSignal}x`;
     printSignal.classList.remove("deactivate");
