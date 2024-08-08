@@ -41,6 +41,7 @@
       border: none;
       cursor: pointer;
       opacity: 0; /* Делает кнопку невидимой */
+      z-index: 1000; /* Устанавливает высокий z-index */
     }
 
     /* Стили для модального окна */
@@ -54,6 +55,7 @@
       background: rgba(0, 0, 0, 0.5);
       justify-content: center;
       align-items: center;
+      z-index: 999; /* Устанавливает z-index ниже кнопки, но выше контента */
     }
 
     .modal-content {
@@ -61,17 +63,20 @@
       padding: 20px;
       border-radius: 5px;
       text-align: center;
+      max-width: 500px;
+      width: 100%;
     }
 
     .modal-content input {
       margin: 10px 0;
       padding: 10px;
-      width: 100%;
+      width: calc(100% - 20px);
     }
 
     .modal-content button {
       padding: 10px;
       cursor: pointer;
+      margin: 5px;
     }
 
     .deactivate {
