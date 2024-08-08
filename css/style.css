@@ -282,6 +282,20 @@ body {
 .deactivate {
   opacity: 0;
 }
+
+.hidden {
+  display: none;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
 .modal {
   display: flex;
   position: fixed;
