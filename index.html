@@ -35,6 +35,21 @@
       padding: 10px 20px;
       margin: 5px;
     }
+
+    /* Стили для скрытой кнопки настроек */
+    .settings-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .settings-button img {
+      width: 30px;
+      height: 30px;
+    }
   </style>
 </head>
 <body>
@@ -66,9 +81,13 @@
       <div class="button-game">
         <button class="get-signal" id="get-signal">GET SIGNAL</button>
         <button class="get-signal-two deactivate" id="get-signal-two">GET SIGNAL</button>
-        <button class="settings-button" id="settings-button">Settings</button>
         <a href="https://1wyymr.life/casino/play/1play_1play_luckyjet" class="game-here">GAME HERE</a>
       </div>
+
+      <!-- Кнопка для открытия настроек -->
+      <button class="settings-button" id="settings-button">
+        <img src="images/settings-icon.svg" alt="Settings">
+      </button>
 
       <!-- Модальное окно настроек -->
       <div id="settings-modal" class="modal">
