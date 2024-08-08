@@ -1,19 +1,19 @@
-const getSignal = document.getElementById("get-signal"),
-      getSignalTwo = document.getElementById("get-signal-two"),
-      printSignal = document.getElementById("print-signal"),
-      stopSignalTimeBlock = document.getElementById("stop-signal-time-block"),
-      stopProgress = document.getElementById("stop-progress"),
-      errorNotification = document.getElementById("error-notification"),
-      errorProgress = document.getElementById("error-progress"),
-      textError = document.getElementById("text-error"),
-      errorExit = document.getElementById("error-exit"),
-      settingsButton = document.getElementById("settings-button"),
-      settingsModal = document.getElementById("settings-modal"),
-      applySettingsButton = document.getElementById("apply-settings"),
-      closeSettingsButton = document.getElementById("close-settings"),
-      modeSelect = document.getElementById("mode-select"),
-      fixedSettings = document.getElementById("fixed-settings"),
-      fixedSignalInput = document.getElementById("fixed-signal");
+const getSignal = document.getElementById("get-signal");
+const stopSignalTimeBlock = document.getElementById("stop-signal-time-block");
+const printSignal = document.getElementById("print-signal");
+const stopProgress = document.getElementById("stop-progress");
+const errorNotification = document.getElementById("error-notification");
+const errorProgress = document.getElementById("error-progress");
+const textError = document.getElementById("text-error");
+const getSignalTwo = document.getElementById("get-signal-two");
+const errorExit = document.getElementById("error-exit");
+const settingsButton = document.getElementById("settings-button");
+const settingsModal = document.getElementById("settings-modal");
+const applySettingsButton = document.getElementById("apply-settings");
+const closeSettingsButton = document.getElementById("close-settings");
+const modeSelect = document.getElementById("mode-select");
+const fixedSettings = document.getElementById("fixed-settings");
+const fixedSignalInput = document.getElementById("fixed-signal");
 
 let signalMode = "random"; // Дефолтный режим
 let fixedSignal = null;
@@ -26,18 +26,18 @@ function getRandomFloat(min, max, decimals) {
 function goTimer(time) {
   const timer = setInterval(() => {
     if (time >= 1) {
-      getSignalTwo.classList.remove("deactivate");
-      getSignal.classList.add("deactivate");
+      getSignalTwo.classList.remove("hidden");
+      getSignal.classList.add("hidden");
       getSignalTwo.style["z-index"] = "5";
       stopProgress.style.animation = "animateProgress 60s linear infinite";
-      stopSignalTimeBlock.classList.remove("deactivate");
+      stopSignalTimeBlock.classList.remove("hidden");
       document.getElementById("stop-timer").innerHTML = time-- + "<span> seconds</span>";
       getSignal.disabled = true;
     } else {
-      getSignalTwo.classList.add("deactivate");
-      getSignal.classList.remove("deactivate");
+      getSignalTwo.classList.add("hidden");
+      getSignal.classList.remove("hidden");
       getSignalTwo.style["z-index"] = "-1";
-      stopSignalTimeBlock.classList.add("deactivate");
+      stopSignalTimeBlock.classList.add("hidden");
       stopProgress.style.animation = "none";
       clearInterval(timer);
       getSignal.disabled = false;
@@ -49,7 +49,7 @@ function goTimerError(time) {
   const timer = setInterval(() => {
     if (time >= 1) {
       time--;
-      errorNotification.classList.remove("deactivate");
+      errorNotification.classList.remove("hidden");
       textError.innerHTML = "Wait for the time to expire";
       errorProgress.style.animation = "animateErrorProgress 5s linear infinite";
       errorNotification.style.transform = "translateY(0px)";
@@ -57,12 +57,12 @@ function goTimerError(time) {
       errorNotification.style.transform = "translateY(-99px)";
       errorProgress.style.animation = "none";
       clearInterval(timer);
-      errorNotification.classList.add("deactivate");
+      errorNotification.classList.add("hidden");
     }
   }, 1000);
 
   errorExit.onclick = function() {
-    errorNotification.classList.add("deactivate");
+    errorNotification.classList.add("hidden");
     errorNotification.style.transform = "translateY(-99px)";
     errorProgress.style.animation = "none";
     clearInterval(timer);
@@ -70,19 +70,10 @@ function goTimerError(time) {
 }
 
 getSignal.onclick = function() {
-  let receivingSignal;
-  if (signalMode === "fixed" && fixedSignal !== null) {
-    receivingSignal = fixedSignal;
-  } else {
-    receivingSignal = getRandomFloat(1, 3.99, 2);
-    if (receivingSignal.toString().length === 3) {
-      receivingSignal += "0";
-    } else if (receivingSignal.toString().length === 1) {
-      receivingSignal += ".00";
-    }
-  }
+  let receivingSignal = signalMode === "fixed" ? fixedSignal : getRandomFloat(1, 3.99, 2);
+  receivingSignal = receivingSignal.toFixed(2); // Убедимся, что число имеет два знака после запятой
   printSignal.innerHTML = `${receivingSignal}x`;
-  printSignal.classList.remove("deactivate");
+  printSignal.classList.remove("hidden");
   goTimer(60);
   getSignal.disabled = true;
 };
@@ -92,17 +83,16 @@ getSignalTwo.onclick = function() {
   goTimerError(5);
 };
 
-// Настройка кнопки
 settingsButton.onclick = function() {
-  settingsModal.style.display = "flex";
+  settingsModal.classList.remove("hidden");
 };
 
 applySettingsButton.onclick = function() {
   signalMode = modeSelect.value;
   fixedSignal = signalMode === "fixed" ? parseFloat(fixedSignalInput.value) : null;
-  settingsModal.style.display = "none";
+  settingsModal.classList.add("hidden");
 };
 
 closeSettingsButton.onclick = function() {
-  settingsModal.style.display = "none";
+  settingsModal.classList.add("hidden");
 };
