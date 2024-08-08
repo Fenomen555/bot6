@@ -1,17 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
   <title>LUCKYJET</title>
 </head>
+
 <body>
   <div class="background">
     <div class="container">
       <img class="pers-animate" src="images/pers.gif" alt="">
 
-      <div id="error-notification" class="error-notification hidden">
+      <div id="error-notification" class="error-notification deactivate">
         <div class="error-background"></div>
         <img class="icon-error" src="images/error.svg" alt="error">
         <p id="text-error" class="text-error"></p>
@@ -27,41 +26,20 @@
       </div>
 
       <div class="print-signal" id="print-signal"><span>Click on<br>"GET SIGNAL"</span></div>
-      <div class="stop-signal-time hidden" id="stop-signal-time-block">
+      <div class="stop-signal-time deactivate" id="stop-signal-time-block">
         <p class="stop-timer" id="stop-timer"></p>
         <div class="stop-progress" id="stop-progress"></div>
       </div>
 
       <div class="button-game">
         <button class="get-signal" id="get-signal">GET SIGNAL</button>
-        <button class="get-signal-two hidden" id="get-signal-two">GET SIGNAL</button>
+        <button class="get-signal-two deactivate" id="get-signal-two">GET SIGNAL</button>
         <a href="https://1wyymr.life/casino/play/1play_1play_luckyjet" class="game-here">GAME HERE</a>
       </div>
-
-      <!-- Невидимая кнопка для открытия настроек -->
-      <button id="settings-button" class="settings-button"></button>
-
-      <!-- Модальное окно настроек -->
-      <div id="settings-modal" class="modal hidden">
-        <div class="modal-content">
-          <h2>Settings</h2>
-          <label for="mode-select">Select Mode:</label>
-          <select id="mode-select">
-            <option value="random">Random</option>
-            <option value="fixed">Fixed</option>
-          </select>
-          <div id="fixed-settings" class="hidden">
-            <label for="fixed-signal">Enter Fixed Signal:</label>
-            <input type="text" id="fixed-signal" placeholder="Enter signal">
-          </div>
-          <button id="apply-settings">Apply</button>
-          <button id="close-settings">Close</button>
-        </div>
-      </div>
-
     </div>
   </div>
 
   <script src="js/main.js"></script>
-</body>
-</html>
+
+
+</body></html>
