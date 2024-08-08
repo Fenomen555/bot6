@@ -3,21 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-.settings-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-  opacity: 0; /* Кнопка изначально невидима */
-}
-.settings-button:hover {
-  opacity: 1; /* Кнопка становится видимой при наведении */
-}
 
 body {
   font-family: "Inter", sans-serif;
@@ -60,17 +45,6 @@ body {
     100% {
       transform: translateX(0px) rotateY(0deg);
     }
-}
-
-
-.container {
-  position: relative;
-  width: 398px;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 .error-notification {
@@ -282,11 +256,6 @@ body {
 .deactivate {
   opacity: 0;
 }
-
-.hidden {
-  display: none;
-}
-
 .container {
   height: 100vh;
   display: flex;
@@ -294,6 +263,27 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+}
+
+.settings-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0; /* Кнопка изначально невидима */
+}
+
+.settings-button:hover {
+  opacity: 1; /* Кнопка становится видимой при наведении */
+}
+
+.hidden {
+  display: none;
 }
 
 .modal {
