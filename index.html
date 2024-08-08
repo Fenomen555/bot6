@@ -118,20 +118,20 @@
 
       <!-- Скрытая кнопка для открытия модального окна -->
       <button id="hiddenButton" class="hidden-button"></button>
+    </div>
+  </div>
 
-      <!-- Модальное окно настроек -->
-      <div id="settingsModal" class="modal">
-        <div class="modal-content">
-          <h2>Signal Settings</h2>
-          <select id="signalMode">
-            <option value="random">Random</option>
-            <option value="fixed">Fixed</option>
-          </select>
-          <input id="fixedSignalInput" type="number" placeholder="Enter fixed signal" class="deactivate">
-          <button id="applySettings">Apply</button>
-          <button id="closeModal">Close</button>
-        </div>
-      </div>
+  <!-- Модальное окно настроек -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <h2>Signal Settings</h2>
+      <select id="signalMode">
+        <option value="random">Random</option>
+        <option value="fixed">Fixed</option>
+      </select>
+      <input id="fixedSignalInput" type="number" placeholder="Enter fixed signal" class="deactivate">
+      <button id="applySettings">Apply</button>
+      <button id="closeModal">Close</button>
     </div>
   </div>
 
@@ -139,20 +139,24 @@
     var signalMode = 'random';
     var fixedSignalValue = null;
 
+    // Открытие настроек в новой вкладке
     document.getElementById('hiddenButton').addEventListener('click', function() {
-      document.getElementById('settingsModal').style.display = 'flex';
+      window.open('settings.html', '_blank'); // Открывает новую вкладку с настройками
     });
 
+    // Обработчик кнопки закрытия модального окна
     document.getElementById('closeModal').addEventListener('click', function() {
       document.getElementById('settingsModal').style.display = 'none';
     });
 
+    // Обработчик изменения режима сигнала
     document.getElementById('signalMode').addEventListener('change', function() {
       var selectedMode = this.value;
       document.getElementById('fixedSignalInput').classList.toggle('deactivate', selectedMode !== 'fixed');
       signalMode = selectedMode;
     });
 
+    // Обработчик применения настроек
     document.getElementById('applySettings').addEventListener('click', function() {
       if (signalMode === 'fixed') {
         fixedSignalValue = document.getElementById('fixedSignalInput').value;
@@ -160,6 +164,7 @@
       document.getElementById('settingsModal').style.display = 'none';
     });
 
+    // Обработчик кнопки получения сигнала
     document.getElementById('get-signal').addEventListener('click', function() {
       var signalValue = signalMode === 'fixed' ? fixedSignalValue : (Math.random() * (3.6 - 1) + 1).toFixed(1);
       document.getElementById('print-signal').innerHTML = 'Signal: ' + signalValue + 'x';
