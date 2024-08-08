@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", function() {
   const getSignal = document.getElementById("get-signal");
+  const getSignalTwo = document.getElementById("get-signal-two");
   const stopSignalTimeBlock = document.getElementById("stop-signal-time-block");
   const printSignal = document.getElementById("print-signal");
-  const stopProgress = document.getElementById("stop-progress");
+  const stopTimer = document.getElementById("stop-timer");
+  const stopProgressInner = document.getElementById("stop-progress-inner");
   const errorNotification = document.getElementById("error-notification");
-  const errorProgress = document.getElementById("error-progress");
-  const textError = document.getElementById("text-error");
-  const getSignalTwo = document.getElementById("get-signal-two");
   const errorExit = document.getElementById("error-exit");
   const settingsButton = document.getElementById("settings-button");
   const settingsModal = document.getElementById("settings-modal");
@@ -50,54 +49,4 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Timer for "GET SIGNAL" button
-  function goTimer(time) {
-    const timer = setInterval(() => {
-      if (time >= 1) {
-        getSignalTwo.classList.remove("hidden");
-        getSignal.classList.add("hidden");
-        getSignalTwo.style.zIndex = "5";
-        stopProgress.style.animation = "animateProgress 60s linear infinite";
-        stopSignalTimeBlock.classList.remove("hidden");
-        const timerElement = document.getElementById("stop-timer");
-        let seconds = time;
-        timerElement.innerText = `${seconds} seconds`;
-        const interval = setInterval(() => {
-          seconds--;
-          timerElement.innerText = `${seconds} seconds`;
-          if (seconds <= 0) {
-            clearInterval(interval);
-            getSignal.classList.remove("hidden");
-            getSignalTwo.classList.add("hidden");
-            stopSignalTimeBlock.classList.add("hidden");
-            stopProgress.style.animation = "none";
-          }
-        }, 1000);
-      } else {
-        errorNotification.style.display = 'block';
-        textError.textContent = "Wait for the time to expire";
-        errorProgress.style.animation = "animateProgress 60s linear infinite";
-        setTimeout(() => {
-          errorNotification.style.display = 'none';
-        }, 5000); // Error notification disappears after 5 seconds
-      }
-    }, 1000);
-  }
-
-  // Event listener for GET SIGNAL button
-  getSignal.onclick = function() {
-    if (signalMode === 'random') {
-      printSignal.innerText = `Random Signal Value: ${getRandomFloat(1.00, 2.00, 2)}`;
-    } else if (signalMode === 'fixed') {
-      printSignal.innerText = `Fixed Signal Value: ${fixedSignalValue}`;
-    }
-    goTimer(60); // Start timer with 60 seconds
-  };
-
-  // Event listener for error exit button
-  errorExit.onclick = function() {
-    errorNotification.style.display = 'none';
-  };
-
-  // Initial settings
-  toggleFixedSettings(signalMode === 'fixed');
-});
+  function go
