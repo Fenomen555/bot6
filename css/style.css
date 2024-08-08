@@ -29,291 +29,154 @@ body {
   z-index: 0;
   width: 319px;
   height: 300px;
-  animation: cowmove 15s infinite;    
+  animation: cowmove 15s infinite;
 }
 
-@keyframes cowmove{
-    0% {
-      transform: translateX(0px) rotateY(0deg);
-    }
-    49% {
-      transform: translateX(300px) translateY(-25px) rotateY(0deg);
-    }
-    50% {
-      transform: translateX(300px) translateY(-25px) rotateY(0deg);
-    }
-    100% {
-      transform: translateX(0px) rotateY(0deg);
-    }
+@keyframes cowmove {
+  0% {
+    transform: translateX(0px) rotateY(0deg);
+  }
+  49% {
+    transform: translateX(300px) translateY(-25px) rotateY(0deg);
+  }
+  50% {
+    transform: translateX(300px) translateY(-25px) rotateY(0deg);
+  }
+  100% {
+    transform: translateX(0px) rotateY(0deg);
+  }
 }
 
 .error-notification {
   width: 300px;
-  height: 50px;
-  position: relative;
+  height: 130px;
+  border-radius: 5px;
+  position: fixed;
+  left: 50%;
+  top: 60%;
+  transform: translateX(-50%) translateY(-100%);
+  z-index: 1000;
+  background: #4F4F4F;
+  color: white;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: -25px;
-  clip-path: inset(0px round 10px 10px);
-  transition: all .2s;
-  transform: translateY(-99px);
+  justify-content: center;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  font-size: 14px;
 }
 
 .error-background {
   position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
   bottom: 0;
-  width: 300px;
-  height: 50px;
-  background: #FFEBEB;
-  opacity: .5;
-  border-radius: 10px;
-  margin-bottom: -52px;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .icon-error {
-  z-index: 2;
+  width: 30px;
+  height: 30px;
+}
+
+.text-error {
+  margin-top: 10px;
 }
 
 .error-exit {
   position: absolute;
-  right: 0;
-  width: 50px;
-  height: 50px;
-  z-index: 2;
+  right: 10px;
+  top: 10px;
   cursor: pointer;
-  background: #FFC2C2;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-}
-
-.text-error {
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 900;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  padding-left: 10px;
-  padding-right: 45px;
 }
 
 .error-progress {
-  width: 300px;
-  height: 3px;
-  background: linear-gradient(90deg, #E00000 0%, #E00000 100%) left /0% 100% no-repeat #D9D9D9;
-  z-index: 4;
+  width: 100%;
+  height: 10px;
+  background: #FF3A3A;
   position: absolute;
   bottom: 0;
   left: 0;
-  border-radius: 5px;
+  animation: errorProgress 5s linear infinite;
 }
 
-@keyframes animateErrorProgress {
-  100% {
-    background-size: 100% 100%;
+@keyframes errorProgress {
+  0% {
+    width: 0;
   }
-}
-
-.top-content {
-  margin-bottom: 60px;  
-}
-
-.name-bot {
-  display: flex;
-  justify-content: center;
-  font-size: 15px;
-  font-weight: 900;
-}
-
-.print-signal {
-  margin-bottom: 34px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 217px;
-  height: 217px;
-  background-color: #151027;
-  border: 5px solid #34A5B5;
-  border-radius: 50%;
-  font-size: 40px;
-  font-weight: 900;
-  transition: all .5s;
-  z-index: 10;
-}
-
-.print-signal span {
-  text-transform: uppercase;
-  font-size: 20px;
-  text-align: center;
-}
-
-
-.stop-signal-time {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 26px;
-  width: 230px;
-  transition: all .5s;
-}
-
-.stop-timer {
-  font-size: 20px;
-  font-weight: 900;
-  height: 35px;
-}
-
-.stop-progress {
-  width: 221px;
-  height: 18px;
-  background: linear-gradient(90deg, #BA60FD 0%, #218288 100%) left /0% 100% no-repeat #D9D9D9;
-  border-radius: 15px;
-}
-
-@keyframes animateProgress {
   100% {
-    background-size: 100% 100%;
+    width: 100%;
   }
-}
-
-.button-game {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.get-signal {
-  position: relative;
-  width: 278px;
-  height: 56px;
-  border: none;
-  background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 30px;
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 900;
-  cursor: pointer;
-  transition: all .2s;
-  z-index: 0;
-}
-
-.get-signal-two {
-  position: absolute;
-  width: 278px;
-  height: 56px;
-  border: none;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 30px;
-  background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: 900;
-  cursor: pointer;
-  z-index: -1;
-  transition: all .2s;
-}
-
-.game-here {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 130px;
-  height: 35px;
-  background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-  border-radius: 30px;
-  color: #ffffff;
-  font-size: 16px;
-  font-weight: 900;
-  text-decoration: none;
-  transition: all .2s;
-  z-index: 4;
-}
-
-.get-signal::before, .game-here::before, .get-signal-two::before{
-  content: "";
-  position: absolute;
-  inset: 0px;
-  z-index: -1;
-  background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
-  filter: blur(10px);
-  border-radius: 30px;
-}
-
-.get-signal:active, .game-here:active, .get-signal-two:active{
-  transform: scale(95%);
-}
-
-.deactivate {
-  opacity: 0;
-}
-.container {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.settings-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  z-index: 1000;
-  opacity: 0; /* Кнопка изначально невидима */
-}
-
-.settings-button:hover {
-  opacity: 1; /* Кнопка становится видимой при наведении */
 }
 
 .hidden {
   display: none;
 }
 
-.modal {
-  display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  width: 300px;
+.top-content {
   text-align: center;
+  margin-top: 20px;
 }
 
-.modal-content input[type="text"] {
-  width: calc(100% - 22px);
-  padding: 10px;
+.logo-game {
+  width: 100px;
+}
+
+.name-bot {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.button-game {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.get-signal, .get-signal-two {
+  background-color: #D7A70D;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #000000;
+  cursor: pointer;
   margin-bottom: 10px;
 }
 
-.modal-content button {
-  padding: 10px 20px;
-  margin: 5px;
+.get-signal-two.hidden {
+  display: none;
+}
+
+.game-here {
+  color: #D7A70D;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.settings-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
