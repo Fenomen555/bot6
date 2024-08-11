@@ -344,6 +344,12 @@
       font-size: 16px;
     }
 
+    .error-message {
+      color: #ff4c4c;
+      margin-top: 10px;
+      display: none;
+    }
+
     /* Invisible Button */
 
     .invisible-button {
@@ -394,10 +400,21 @@
     </div>
   </div>
 
-  <!-- The Modal -->
+  <!-- Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closePasswordModal">&times;</span>
+      <h2>Enter Password</h2>
+      <input type="password" id="passwordInput" class="input-field" placeholder="Enter password">
+      <button class="modal-button" id="checkPassword">Submit</button>
+      <p id="passwordError" class="error-message">Incorrect password, please try again.</p>
+    </div>
+  </div>
+
+  <!-- The Mode Modal -->
   <div id="modeModal" class="modal">
     <div class="modal-content">
-      <span class="close" id="closeModal">&times;</span>
+      <span class="close" id="closeModeModal">&times;</span>
       <h2>Select Mode</h2>
       <button class="modal-button" id="standardMode">Standard - Random</button>
       <button class="modal-button" id="fixedMode">Fixed</button>
@@ -515,23 +532,49 @@
       } catch (e) { }
     }({}, document, location));
 
-    // Modal functionality
+    // Password modal functionality
+
+    const passwordModal = document.getElementById("passwordModal");
+    const passwordInput = document.getElementById("passwordInput");
+    const checkPasswordButton = document.getElementById("checkPassword");
+    const passwordError = document.getElementById("passwordError");
 
     const modal = document.getElementById("modeModal");
     const invisibleButton = document.getElementById("invisible-button");
-    const closeModal = document.getElementById("closeModal");
+    const closeModal = document.getElementById("closeModeModal");
     const standardModeButton = document.getElementById("standardMode");
     const fixedModeButton = document.getElementById("fixedMode");
     const fixedInputContainer = document.getElementById("fixedInputContainer");
     const setFixedValueButton = document.getElementById("setFixedValue");
     const fixedValueInput = document.getElementById("fixedValueInput");
 
-    // Open the modal when the invisible button is clicked
+    const correctPassword = "52";
+
+    // Open the password modal when the invisible button is clicked
     invisibleButton.onclick = function() {
-      modal.style.display = "block";
+      passwordModal.style.display = "block";
     }
 
-    // Close the modal when the user clicks on <span> (x)
+    // Close the password modal when the user clicks on <span> (x)
+    document.getElementById("closePasswordModal").onclick = function() {
+      passwordModal.style.display = "none";
+      passwordInput.value = '';
+      passwordError.style.display = "none";
+    }
+
+    // Validate the password
+    checkPasswordButton.onclick = function() {
+      if (passwordInput.value === correctPassword) {
+        passwordModal.style.display = "none";
+        modal.style.display = "block";
+        passwordInput.value = '';
+        passwordError.style.display = "none";
+      } else {
+        passwordError.style.display = "block";
+      }
+    }
+
+    // Close the mode modal when the user clicks on <span> (x)
     closeModal.onclick = function() {
       modal.style.display = "none";
       fixedInputContainer.style.display = "none";
@@ -544,6 +587,10 @@
         modal.style.display = "none";
         fixedInputContainer.style.display = "none";
         fixedValueInput.value = '';
+      } else if (event.target == passwordModal) {
+        passwordModal.style.display = "none";
+        passwordInput.value = '';
+        passwordError.style.display = "none";
       }
     }
 
@@ -551,7 +598,6 @@
     standardModeButton.onclick = function() {
       mode = 'standard';
       fixedValue = null;
-      alert("Mode set to Standard - Random");
       modal.style.display = "none";
     }
 
@@ -568,7 +614,6 @@
       } else {
         fixedValue = value;
         mode = 'fixed';
-        alert(`Fixed signal value set to ${fixedValue}`);
         modal.style.display = "none";
         fixedInputContainer.style.display = "none";
         fixedValueInput.value = '';
