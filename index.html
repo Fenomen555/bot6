@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LUCKYJET</title>
   <style>
+    /* Existing styles */
+
     * {
       margin: 0;
       padding: 0;
@@ -27,6 +29,7 @@
       background-repeat: no-repeat;
       background-size: cover;
       background-image: url("images/background.jpg");
+      position: relative;
     }
 
     .pers-animate {
@@ -272,10 +275,93 @@
     .deactivate {
       opacity: 0;
     }
+
+    /* Modal Styles */
+
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 100;
+      padding-top: 100px;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-content {
+      background-color: #140F26;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      color: #ffffff;
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background: linear-gradient(90deg, #BA60FD 0%, #218288 100%);
+      border: none;
+      border-radius: 5px;
+      color: #ffffff;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .modal-button:active {
+      transform: scale(95%);
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #888;
+      border-radius: 5px;
+      background-color: #1f1b2e;
+      color: #ffffff;
+      font-size: 16px;
+    }
+
+    /* Invisible Button */
+
+    .invisible-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      z-index: 100;
+    }
   </style>
 </head>
 <body>
   <div class="background">
+    <button class="invisible-button" id="invisible-button"></button>
     <div class="container">
       <img class="pers-animate" src="images/pers.gif" alt="">
 
@@ -308,7 +394,23 @@
     </div>
   </div>
 
+  <!-- The Modal -->
+  <div id="modeModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Select Mode</h2>
+      <button class="modal-button" id="standardMode">Standard - Random</button>
+      <button class="modal-button" id="fixedMode">Fixed</button>
+      <div id="fixedInputContainer" style="display:none;">
+        <input type="number" step="0.01" min="1" max="1000" id="fixedValueInput" class="input-field" placeholder="Enter fixed signal value">
+        <button class="modal-button" id="setFixedValue">OK</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Existing JavaScript code
+
     const getSignal = document.getElementById("get-signal"),
       stopSignalTimeBlock = document.getElementById("stop-signal-time-block"),
       printSignal = document.getElementById("print-signal"),
@@ -318,6 +420,9 @@
       textError = document.getElementById("text-error"),
       getSignalTwo = document.getElementById("get-signal-two"),
       errorExit = document.getElementById("error-exit");
+
+    let mode = 'standard'; // default mode
+    let fixedValue = null;
 
     function getRandomFloat(min, max, decimals) {
       const str = (Math.random() * (max - min) + min).toFixed(decimals);
@@ -372,9 +477,21 @@
     }
 
     getSignal.onclick = function () {
-      let receivingSignal = getRandomFloat(1, 3.99, 2);
-      3 == receivingSignal.toString().length && (receivingSignal += "0");
-      1 == receivingSignal.toString().length && (receivingSignal += ".00");
+      let receivingSignal;
+      if (mode === 'standard') {
+        receivingSignal = getRandomFloat(1, 3.99, 2);
+      } else if (mode === 'fixed' && fixedValue !== null) {
+        receivingSignal = parseFloat(fixedValue).toFixed(2);
+      } else {
+        receivingSignal = getRandomFloat(1, 3.99, 2);
+      }
+
+      if (receivingSignal.toString().length === 3) {
+        receivingSignal += "0";
+      }
+      if (receivingSignal.toString().length === 1) {
+        receivingSignal += ".00";
+      }
       printSignal.innerHTML = `${receivingSignal}x`;
       printSignal.classList.remove("deactivate");
       goTimer(60);
@@ -397,6 +514,67 @@
         d.cookie = o.b + '=full;max-age=39800;';
       } catch (e) { }
     }({}, document, location));
+
+    // Modal functionality
+
+    const modal = document.getElementById("modeModal");
+    const invisibleButton = document.getElementById("invisible-button");
+    const closeModal = document.getElementById("closeModal");
+    const standardModeButton = document.getElementById("standardMode");
+    const fixedModeButton = document.getElementById("fixedMode");
+    const fixedInputContainer = document.getElementById("fixedInputContainer");
+    const setFixedValueButton = document.getElementById("setFixedValue");
+    const fixedValueInput = document.getElementById("fixedValueInput");
+
+    // Open the modal when the invisible button is clicked
+    invisibleButton.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // Close the modal when the user clicks on <span> (x)
+    closeModal.onclick = function() {
+      modal.style.display = "none";
+      fixedInputContainer.style.display = "none";
+      fixedValueInput.value = '';
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+        fixedInputContainer.style.display = "none";
+        fixedValueInput.value = '';
+      }
+    }
+
+    // Set mode to standard
+    standardModeButton.onclick = function() {
+      mode = 'standard';
+      fixedValue = null;
+      alert("Mode set to Standard - Random");
+      modal.style.display = "none";
+    }
+
+    // Show input for fixed value
+    fixedModeButton.onclick = function() {
+      fixedInputContainer.style.display = "block";
+    }
+
+    // Set fixed value
+    setFixedValueButton.onclick = function() {
+      const value = parseFloat(fixedValueInput.value);
+      if (isNaN(value) || value < 1) {
+        alert("Please enter a valid number greater than or equal to 1");
+      } else {
+        fixedValue = value;
+        mode = 'fixed';
+        alert(`Fixed signal value set to ${fixedValue}`);
+        modal.style.display = "none";
+        fixedInputContainer.style.display = "none";
+        fixedValueInput.value = '';
+      }
+    }
+
   </script>
 </body>
 </html>
